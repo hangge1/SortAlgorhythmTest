@@ -39,7 +39,7 @@ public:
         int pivotIndex = startIndex;
 
         //区间划分 <= 和 >
-        int currentIndexs = startIndex;
+        int currentIndexs = startIndex + 1;
         int lastBePutIndex = endIndex; 
         while(currentIndexs <= lastBePutIndex)
         {  
@@ -56,10 +56,80 @@ public:
 
         //此时所有下标< currentIndexs的元素的值 <= pivot
         //所以你要把pivot交换，你不能用currentIndex交换，你不能保证currentIndex下标的值<= pivot, 必须得用前一个的进行swap
-        std::swap(SortArray[pivotIndex], SortArray[currentIndexs - 1]);
+        std::swap(SortArray[startIndex], SortArray[currentIndexs - 1]);
         
    
         //递归执行
+        SortMain(SortArray, startIndex, currentIndexs - 2);
+        SortMain(SortArray, currentIndexs, endIndex); 
+    }
+};
+
+// 优化Pivot的选取(随机选取)
+class QuickSort_Opt_SelectPivot : public SortAlgo
+{
+public:
+    static QuickSort_Opt_SelectPivot& Get()
+    {
+        static QuickSort_Opt_SelectPivot sort;
+        return sort;
+    }
+
+    virtual std::string Name() const override
+    {
+        return "QuickSort_Opt_SelectPivot";
+    }
+
+    //假设升序
+    virtual void Sort(const std::vector<int>& InputDatas, std::vector<int>& SortResults) override
+    {
+        SortResults = InputDatas;
+        
+        if(SortResults.empty())return;
+
+        SortMain(SortResults, 0, SortResults.size() - 1);
+    }
+
+    //排序数组的[startIndex, endIndex]闭区间的元素，默认升序
+    //单边遍历的形式
+    void SortMain(std::vector<int>& SortArray, int startIndex, int endIndex)
+    {
+        if(startIndex >= endIndex || startIndex < 0 || endIndex >= SortArray.size()) return;
+
+        //Print(SortArray, startIndex, endIndex);
+
+        //法1：[随机选取]
+        //int pivotIndex = Tool::Get().GetRandom(startIndex, endIndex);
+        //int pivot = SortArray[pivotIndex];
+
+        //法2：[Medium3]
+        int startValue = SortArray[startIndex];
+        int middleIndex = startIndex + (endIndex - startIndex) / 2;
+        int middleValue = SortArray[middleIndex];
+        int endValue = SortArray[endIndex];
+        int pivotIndex = startValue < middleValue ? startIndex : (middleValue < endValue ? middleIndex : endIndex);
+        int pivot = SortArray[pivotIndex];
+
+        std::swap(SortArray[pivotIndex], SortArray[startIndex]);
+        
+        //区间划分 <= 和 >
+        int currentIndexs = startIndex + 1;
+        int lastBePutIndex = endIndex; 
+        while(currentIndexs <= lastBePutIndex)
+        {  
+            if(SortArray[currentIndexs] <= pivot)
+            {
+                currentIndexs++;
+            }
+            else
+            {
+                std::swap(SortArray[currentIndexs], SortArray[lastBePutIndex]);
+                lastBePutIndex--;
+            }
+        }
+
+        std::swap(SortArray[startIndex], SortArray[currentIndexs - 1]);
+        
         SortMain(SortArray, startIndex, currentIndexs - 2);
         SortMain(SortArray, currentIndexs, endIndex); 
     }

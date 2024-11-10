@@ -1,9 +1,10 @@
 #pragma once
 
 #include <iostream>
-#include <chrono>
-#include <random>
 
+#include <chrono>
+
+#include "Tool.h"
 #include "SortAlgo.h"
 #include "StandardSort.h"
 
@@ -118,14 +119,10 @@ public:
 
     std::vector<int> GenerateTestData(int NumberOfRandomData, int MinNum = 0, int MaxNum = 99) const
     {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> distrib(MinNum, MaxNum);
-
         std::vector<int> result;
         for (int i = 0; i < NumberOfRandomData; i++)
         {
-            result.emplace_back(distrib(gen));
+            result.emplace_back(Tool::Get().GetRandom(MinNum, MaxNum));
         }
 
         return result;
