@@ -20,7 +20,7 @@ int main()
 
     SortAlgoCompareInstrumentConfig TestConfigParams;
     TestConfigParams.TestTimes = 20;
-    TestConfigParams.Numbers = 100;
+    TestConfigParams.Numbers = 10000;
     TestConfigParams.MinNum = 1;
     TestConfigParams.MaxNum = 20;
     TestConfigParams.IsPrintTime = true;
@@ -35,6 +35,7 @@ int main()
     //SortAlgoCompareInstrument::Get().Execute_Test<SelectionSort>(TestConfigParams);
     SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
     SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Opt_SelectPivot>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_UnRecursive>(TestConfigParams);
 
     
 
