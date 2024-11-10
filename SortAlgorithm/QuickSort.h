@@ -102,7 +102,7 @@ public:
         //int pivotIndex = Tool::Get().GetRandom(startIndex, endIndex);
         //int pivot = SortArray[pivotIndex];
 
-        //法2：[Medium3]
+        //法2：[Medium3]  寻找start、end、中点，值最小的作为pivot
         int startValue = SortArray[startIndex];
         int middleIndex = startIndex + (endIndex - startIndex) / 2;
         int middleValue = SortArray[middleIndex];
