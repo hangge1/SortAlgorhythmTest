@@ -1,6 +1,6 @@
 #pragma once
 
-#pragma once
+#include "SortAlgo.h"
 
 // the simplest way to write Bubble Sort 
 // It has not been optimized and theoretically is relatively slow

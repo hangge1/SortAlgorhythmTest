@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SortAlgo.h"
 
 class InsertionSort : public SortAlgo
 {
