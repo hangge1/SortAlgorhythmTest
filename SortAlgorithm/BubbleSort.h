@@ -2,6 +2,8 @@
 
 #pragma once
 
+// the simplest way to write Bubble Sort 
+// It has not been optimized and theoretically is relatively slow
 class BubbleSort_Easy : public SortAlgo
 {
 public:
@@ -36,6 +38,7 @@ public:
     }
 };
 
+// use a flag to Optimize the situation where the sequence is basically ordered
 class BubbleSort_Flag_Opt : public SortAlgo
 {
 public:
@@ -74,6 +77,7 @@ public:
     }
 };
 
+// Optimize the number of iterations for each sequence
 class BubbleSort_ForTime_Opt : public SortAlgo
 {
 public:
@@ -113,3 +117,5 @@ public:
         }
     }
 };
+
+//TODO º¶Œ≤æ∆À„∑®

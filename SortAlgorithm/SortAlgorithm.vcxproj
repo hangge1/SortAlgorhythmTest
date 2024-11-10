@@ -131,7 +131,7 @@
     <ClCompile Include="SortAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BubbleSort_Easy.h" />
+    <ClInclude Include="BubbleSort.h" />
     <ClInclude Include="InsertionSort.h" />
     <ClInclude Include="SortAlgo.h" />
     <ClInclude Include="SortAlgoCompareInstrument.h" />

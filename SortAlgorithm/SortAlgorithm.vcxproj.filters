@@ -32,7 +32,7 @@
     <ClInclude Include="StandardSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BubbleSort_Easy.h">
+    <ClInclude Include="BubbleSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

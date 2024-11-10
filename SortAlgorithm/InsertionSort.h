@@ -1,5 +1,6 @@
 #pragma once
 
+
 class InsertionSort : public SortAlgo
 {
 public:

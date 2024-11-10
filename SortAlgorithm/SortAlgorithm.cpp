@@ -13,6 +13,8 @@ int main()
     //数组的数字个数
     //最小数字
     //最大数字
+    //是否开启耗时打印
+    //是否开启中间过程打印
     SortAlgoCompareInstrument::Get().Execute_Test<InsertionSort>(10, 10000, 1, 1000, true, false);
     SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Easy>(10, 10000, 1, 1000, true, false);
     SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Flag_Opt>(10, 10000, 1, 1000, true, false);
