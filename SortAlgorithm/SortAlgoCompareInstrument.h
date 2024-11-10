@@ -8,6 +8,16 @@
 #include "StandardSort.h"
 
 
+struct SortAlgoCompareInstrumentConfig
+{
+    int TestTimes = 1;
+    int Numbers = 10;
+    int MinNum = 1;
+    int MaxNum = 20;
+    bool IsPrintTime = true;
+    bool InIsPrintTemp = true;
+};
+
 class SortAlgoCompareInstrument
 {
 public:
@@ -27,6 +37,12 @@ public:
     {
         static SortAlgoCompareInstrument self;
         return self;
+    }
+
+    template<typename SortAlgoType>
+    void Execute_Test(const SortAlgoCompareInstrumentConfig& config)
+    {
+        Execute_Test<SortAlgoType>(config.TestTimes, config.Numbers, config.MinNum, config.MaxNum, config.IsPrintTime, config.InIsPrintTemp);
     }
 
     template<typename SortAlgoType>
@@ -72,7 +88,6 @@ public:
         auto start = std::chrono::high_resolution_clock::now();
         ToBeVerifiedSortAlgo.Sort(BeSortDatas, ToBeVerifiedSortAlgoResult);
         LastLoopSpeedTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
-        SumTime += LastLoopSpeedTime;
 
         if(IsPrintTemp) PrintData(ToBeVerifiedSortAlgoResult, ToBeVerifiedSortAlgo.Name() + "≈≈–Ú∫Û: \n");
 
