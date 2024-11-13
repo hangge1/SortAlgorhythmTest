@@ -16,7 +16,8 @@ struct SortAlgoCompareInstrumentConfig
     int MinNum = 1;
     int MaxNum = 20;
     bool IsPrintTime = true;
-    bool InIsPrintTemp = true;
+    bool IsPrintTemp = true;
+    bool IsPrintResult = true;
 };
 
 class SortAlgoCompareInstrument
@@ -33,6 +34,8 @@ public:
     double SumTime = 0.0;
 
     bool IsPrintTemp = false;
+    bool IsPrintTime = false;
+    bool IsPrintResult = true;
 
     static SortAlgoCompareInstrument& Get()
     {
@@ -43,13 +46,15 @@ public:
     template<typename SortAlgoType>
     void Execute_Test(const SortAlgoCompareInstrumentConfig& config)
     {
-        Execute_Test<SortAlgoType>(config.TestTimes, config.Numbers, config.MinNum, config.MaxNum, config.IsPrintTime, config.InIsPrintTemp);
+        Execute_Test<SortAlgoType>(config.TestTimes, config.Numbers, config.MinNum, config.MaxNum, config.IsPrintTime,config.IsPrintResult, config.IsPrintTemp);
     }
 
     template<typename SortAlgoType>
-    void Execute_Test(int TestTimes, int Numbers, int MinNum, int MaxNum, bool IsPrintTime = true, bool InIsPrintTemp = true)
+    void Execute_Test(int TestTimes, int Numbers, int MinNum, int MaxNum, bool InIsPrintTime = true, bool InIsPrintResult = true, bool InIsPrintTemp = false)
     {
         IsPrintTemp = InIsPrintTemp;
+        IsPrintResult = InIsPrintResult;
+        IsPrintTime = InIsPrintTime;
         SumTime = 0;
         AverageTime = 0;
         SortAlgoCompareInstrument::Default_Test_Number_Count = Numbers;
@@ -57,7 +62,7 @@ public:
         SortAlgoCompareInstrument::Default_Test_MaxNumber = MaxNum;
         std::vector<bool> Results = SortAlgoCompareInstrument::Get().VerifyAlgo(SortAlgoType::Get(), TestTimes);
 
-        if(InIsPrintTemp)
+        if(IsPrintTemp)
         {
             for (int i = 0; i < Results.size(); i++)
             {
@@ -71,6 +76,20 @@ public:
             std::cout << "[" << SortAlgoType::Get().Name() << "]总耗时: " << SumTime / 1000.0 << " ms\n";
         } 
         
+        if(IsPrintResult)
+        {
+            bool hasError = false;
+            for (int i = 0; i < Results.size(); i++)
+            {
+                if(!Results[i])
+                {
+                    hasError = true;
+                    break;
+                }
+            }
+            std::cout << "测试结果: " << (hasError ? "未全部通过测试" : "全部通过测试") << std::endl;
+        }
+
         std::cout << std::endl;
     }
 
