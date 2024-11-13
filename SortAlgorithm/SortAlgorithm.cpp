@@ -6,6 +6,7 @@
 #include "BubbleSort.h"
 #include "SelectionSort.h"
 #include "QuickSort.h"
+#include "MergeSort.h"
 
 
 int main()
@@ -19,12 +20,13 @@ int main()
     //是否开启中间过程打印
 
     SortAlgoCompareInstrumentConfig TestConfigParams;
-    TestConfigParams.TestTimes = 20;
+    TestConfigParams.TestTimes = 10;
     TestConfigParams.Numbers = 10000;
     TestConfigParams.MinNum = 1;
     TestConfigParams.MaxNum = 20;
     TestConfigParams.IsPrintTime = true;
-    TestConfigParams.InIsPrintTemp = false;
+    TestConfigParams.IsPrintTemp = false;
+    TestConfigParams.IsPrintResult = true;
 
     //单纯看速度，经过测试，一般来说   选择 > 插入 > 冒泡
     //SelectionSort > InsertionSort > BubbleSort
@@ -34,8 +36,10 @@ int main()
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_ForTime_Opt>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<SelectionSort>(TestConfigParams);
     SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
-    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Opt_SelectPivot>(TestConfigParams);
-    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_UnRecursive>(TestConfigParams);
+    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Opt_SelectPivot>(TestConfigParams);
+    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_UnRecursive>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<MergeSort>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<MergeSort_NoRecursion>(TestConfigParams);
 
     
 
