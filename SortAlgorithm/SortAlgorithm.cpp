@@ -8,6 +8,7 @@
 #include "QuickSort.h"
 #include "MergeSort.h"
 #include "CountingSort.h"
+#include "HeapSort.h"
 
 
 int main()
@@ -21,8 +22,8 @@ int main()
     //是否开启中间过程打印
 
     SortAlgoCompareInstrumentConfig TestConfigParams;
-    TestConfigParams.TestTimes = 50;
-    TestConfigParams.Numbers = 20000;
+    TestConfigParams.TestTimes = 10;
+    TestConfigParams.Numbers = 10000;
     TestConfigParams.MinNum = 1;
     TestConfigParams.MaxNum = 20;
     TestConfigParams.IsPrintTime = true;
@@ -36,19 +37,23 @@ int main()
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Flag_Opt>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_ForTime_Opt>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<SelectionSort>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Opt_SelectPivot>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_UnRecursive>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<MergeSort>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<MergeSort_NoRecursion>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<MergeSort_NoRecursion>(TestConfigParams);
 
-    // 计数排序
-    SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
+    // 计数排序【稳定写法】
+    //SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
 
     // 堆排序
+    SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Normal>(TestConfigParams);
     
+
     // 基数排序
+  
     // 桶排序
+  
     // 希尔排序
     
 
