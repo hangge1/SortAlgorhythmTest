@@ -20,7 +20,7 @@ int main()
     //是否开启中间过程打印
 
     SortAlgoCompareInstrumentConfig TestConfigParams;
-    TestConfigParams.TestTimes = 5;
+    TestConfigParams.TestTimes = 10;
     TestConfigParams.Numbers = 10000;
     TestConfigParams.MinNum = 1;
     TestConfigParams.MaxNum = 20;
@@ -35,10 +35,11 @@ int main()
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Flag_Opt>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_ForTime_Opt>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<SelectionSort>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Opt_SelectPivot>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_UnRecursive>(TestConfigParams);
     SortAlgoCompareInstrument::Get().Execute_Test<MergeSort>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<MergeSort_NoRecursion>(TestConfigParams);
 
     
 
