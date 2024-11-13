@@ -46,14 +46,13 @@ int main()
     // 计数排序【稳定写法】
     //SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
 
-    // 堆排序
+    // 堆排序【常规版本 和 优化版】
     SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Normal>(TestConfigParams);
     SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Opt_CreateHeap>(TestConfigParams);
     
-
-    // 基数排序
+    // 基数排序 【RadixSort】
   
-    // 桶排序
+    // 桶排序【一般基数排序和计数排序，我们都作为桶排序的特殊情形】
   
     // 希尔排序
     
