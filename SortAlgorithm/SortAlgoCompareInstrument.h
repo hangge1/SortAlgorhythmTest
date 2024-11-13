@@ -16,7 +16,8 @@ struct SortAlgoCompareInstrumentConfig
     int MinNum = 1;
     int MaxNum = 20;
     bool IsPrintTime = true;
-    bool InIsPrintTemp = true;
+    bool IsPrintTemp = false;
+    bool IsPrintResult = true;
 };
 
 class SortAlgoCompareInstrument
@@ -33,6 +34,8 @@ public:
     double SumTime = 0.0;
 
     bool IsPrintTemp = false;
+    bool IsPrintTime = true;
+    bool IsPrintResult = true;
 
     static SortAlgoCompareInstrument& Get()
     {
@@ -43,13 +46,18 @@ public:
     template<typename SortAlgoType>
     void Execute_Test(const SortAlgoCompareInstrumentConfig& config)
     {
-        Execute_Test<SortAlgoType>(config.TestTimes, config.Numbers, config.MinNum, config.MaxNum, config.IsPrintTime, config.InIsPrintTemp);
+        Execute_Test<SortAlgoType>(config.TestTimes, config.Numbers, config.MinNum, 
+            config.MaxNum, config.IsPrintTime, config.IsPrintResult,config.IsPrintTemp);
     }
 
     template<typename SortAlgoType>
-    void Execute_Test(int TestTimes, int Numbers, int MinNum, int MaxNum, bool IsPrintTime = true, bool InIsPrintTemp = true)
+    void Execute_Test(int TestTimes, int Numbers, int MinNum, int MaxNum, bool InIsPrintTime = true,
+        bool InIsPrintResult = true, bool InIsPrintTemp = true)
     {
         IsPrintTemp = InIsPrintTemp;
+        IsPrintResult = InIsPrintResult;
+        IsPrintTime = InIsPrintTime;
+
         SumTime = 0;
         AverageTime = 0;
         SortAlgoCompareInstrument::Default_Test_Number_Count = Numbers;
@@ -57,12 +65,27 @@ public:
         SortAlgoCompareInstrument::Default_Test_MaxNumber = MaxNum;
         std::vector<bool> Results = SortAlgoCompareInstrument::Get().VerifyAlgo(SortAlgoType::Get(), TestTimes);
 
-        if(InIsPrintTemp)
+        if(IsPrintTemp)
         {
             for (int i = 0; i < Results.size(); i++)
             {
                 std::cout << "第[" << i << "]测试结果 => " << (Results[i] ? "OK" : "Failed") << std::endl;
             }
+        }
+
+        if(IsPrintResult)
+        {
+            bool HaveError = false;
+            for (int i = 0; i < Results.size(); i++)
+            {
+                if(!Results[i])
+                {
+                    HaveError = true;
+                    break;
+                }
+            }
+
+            std::cout << "测试结果： " << (HaveError ? "未通过": "全部通过") << std::endl;
         }
 
         if(IsPrintTime)

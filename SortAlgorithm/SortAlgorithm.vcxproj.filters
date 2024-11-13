@@ -44,5 +44,8 @@
     <ClInclude Include="Tool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MergeSort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
