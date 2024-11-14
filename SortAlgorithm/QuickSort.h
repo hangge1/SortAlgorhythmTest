@@ -11,10 +11,10 @@
     4、性能优异，易于扩展，不考虑稳定性，首选的排序算法！
     5、这里给出四种实现算法：
     【前三种都是递归写法，只有pivot选择的区别！  第四种是迭代写法】
-        (1) 第一种是每次都选择区间的第一个元素作为pivot
-        (2) 第二种是每次都选择区间的随机一个元素作为pivot
-        (3) 第三种是Medium3，选择头、尾、中间的中位数作为pivot
-        (4) 第四种是迭代写法
+        (1) 第一种QuickSort_Easy  是每次都选择区间的第一个元素作为pivot
+        (2) 第二种QuickSort_RandomPivot  是每次都选择区间的随机一个元素作为pivot
+        (3) 第三种QuickSort_Medium3Pivot  是Medium3，选择头、尾、中间的中位数作为pivot
+        (4) 第四种是迭代写法 QuickSort_UnRecursive
 */
 
 
@@ -212,13 +212,34 @@ public:
 
     int Medium3(std::vector<int>& SortArray, int startIndex, int endIndex)
     {
-        int startValue = SortArray[startIndex];
-        int middleIndex = startIndex + (endIndex - startIndex) / 2;
-        int middleValue = SortArray[middleIndex];
-        int endValue = SortArray[endIndex];
-        int pivotIndex = startValue < middleValue ? startIndex : (middleValue < endValue ? middleIndex : endIndex);
+        struct helper
+        {
+            int v;
+            int index;
+        };
 
-        return pivotIndex;
+        int middleIndex = startIndex + (endIndex - startIndex) / 2;
+
+        helper start { SortArray[startIndex], startIndex};
+        helper middle { SortArray[middleIndex], middleIndex};
+        helper end { SortArray[endIndex], endIndex};
+
+        if(start.v < middle.v)
+        {
+            std::swap(start,middle);
+        }
+
+        if(start.v < end.v)
+        {
+            std::swap(start,end);
+        }
+
+        if(middle.v < end.v)
+        {
+            std::swap(middle,end);
+        }
+
+        return middle.index;
     }
 };
 
