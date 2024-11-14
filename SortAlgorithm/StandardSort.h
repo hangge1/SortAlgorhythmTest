@@ -17,3 +17,4 @@ public:
         std::sort (SortResults.begin(), SortResults.end());   
     }
 };
+

@@ -14,7 +14,7 @@ struct TestConfigParam
     int TestTimes = 1;
 
     //样本数据个数
-    int Numbers = 10;
+    int Numbers = 5;
 
     //数据最小值
     int MinNum = 1;

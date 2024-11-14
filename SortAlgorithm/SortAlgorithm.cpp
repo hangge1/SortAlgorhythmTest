@@ -14,19 +14,8 @@
 #include "SortAlgoCompareInstrument.h"
 #include <thread>
 
-int main()
+void PresetTest(const TestConfigParam& TestConfigParams)
 {
-    //测试配置参数
-    TestConfigParam TestConfigParams;
-    TestConfigParams.TestTimes = 2; //测试次数
-    TestConfigParams.Numbers = 20; //样本数据个数
-    TestConfigParams.MinNum = 1; //最小数字
-    TestConfigParams.MaxNum = 999; //最大数字
-    TestConfigParams.IsPrintTime = true; //是否开启耗时打印
-    TestConfigParams.IsPrintTemp = true; //是否开启中间过程打印
-    TestConfigParams.IsPrintResult = true; //是否开启结果打印
-
-
     //插入、冒泡、选择
     SortAlgoCompareInstrument::Get().Execute_Test<InsertionSort>(TestConfigParams);
     SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Easy>(TestConfigParams);
@@ -52,6 +41,26 @@ int main()
     SortAlgoCompareInstrument::Get().Execute_Test<RadixSort>(TestConfigParams);
   
     // 希尔排序【用的很少】
+}
+
+
+int main()
+{
+    //测试配置参数
+    TestConfigParam TestConfigParams;
+    TestConfigParams.TestTimes = 2; //测试次数
+    TestConfigParams.Numbers = 20; //样本数据个数
+    TestConfigParams.MinNum = 1; //最小数字
+    TestConfigParams.MaxNum = 999; //最大数字
+    TestConfigParams.IsPrintTime = true; //是否开启耗时打印
+    TestConfigParams.IsPrintTemp = false; //是否开启中间过程打印
+    TestConfigParams.IsPrintResult = true; //是否开启结果打印
+
+    //你可以打开下面注释, 来观察打印效果
+    //PresetTest(TestConfigParams);
+    
+    //TODO: 你可以添加自己的排序算法,如下编写
+    //SortAlgoCompareInstrument::Get().Execute_Test<InsertionSort>(TestConfigParams);
     
 
     return 0;

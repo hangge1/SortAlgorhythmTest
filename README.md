@@ -40,12 +40,12 @@
 
 **2、快速添加自定义排序算法类的步骤：**
 
-- 拷贝StandardSort.h文件一份，重命名文件
-- 修改类名，Get函数返回值，Name()函数实现，清空原有Sort算法
+- 拷贝StandardSort.h文件一份，重命名文件为自己的算法名
+- 修改类名，重写父类的Name()函数实现，重写父类的Sort()函数实现
 
-![image-20241114163101416](README/image-20241114163101416.png)
+![image-20241114200920128](README/image-20241114200920128.png)
 
-- 参考main.cpp的测试调用，添加自定义算法的测试调用
+- 参考main.cpp的测试调用，调整参数,  添加自定义算法的测试调用
 
 ```c++
 SortAlgoCompareInstrumentConfig TestConfigParams; //这是测试数据的生成配置
@@ -66,15 +66,23 @@ SortAlgoCompareInstrument::Get().Execute_Test<CustomSort>(TestConfigParams); //�
 
 **3、观察测试结果【默认只打印耗时和测试结果，中间过程不打印】**
 
-![image-20241114163401099](README/image-20241114163401099.png)
+(1)  默认参数测试执行结果打印
+
+![image-20241114201410118](README/image-20241114201410118.png)
+
+
+
+(2)  中间过程允许打印
+
+![image-20241114201441322](README/image-20241114201441322.png)
 
 
 
 
 
-
-
-
+> [!NOTE]
+>
+> 目前只支持int类型的升序验证, 后续会陆续添加降序,  还有float\ double \ long \ short 等一些其他数值类型的支持!
 
 
 
