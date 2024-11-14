@@ -31,15 +31,15 @@ int main()
     TestConfigParams.IsPrintTemp = false;
     TestConfigParams.IsPrintResult = true;
 
-    //单纯看速度，经测试，选择 > 插入 > 冒泡
-    //插入、冒泡、选择
+
+    //插入、冒泡、选择【单纯看速度，经测试，选择 快于 插入 快于 冒泡】
     //SortAlgoCompareInstrument::Get().Execute_Test<InsertionSort>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Easy>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Flag_Opt>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_ForTime_Opt>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<SelectionSort>(TestConfigParams);
     
-    //快排、归并
+    //快排【4个版本，3个递归+1个迭代】、归并【2个版本，1个递归+1个迭代】
     //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_RandomPivot>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Medium3Pivot>(TestConfigParams);
@@ -54,7 +54,7 @@ int main()
     // 计数排序
     //SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
     // 基数排序
-    //SortAlgoCompareInstrument::Get().Execute_Test<RadixSort>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<RadixSort>(TestConfigParams);
   
     // 希尔排序【用的很少】
     
