@@ -23,7 +23,7 @@ int main()
     TestConfigParams.MinNum = 1; //最小数字
     TestConfigParams.MaxNum = 999; //最大数字
     TestConfigParams.IsPrintTime = true; //是否开启耗时打印
-    TestConfigParams.IsPrintTemp = false; //是否开启中间过程打印
+    TestConfigParams.IsPrintTemp = true; //是否开启中间过程打印
     TestConfigParams.IsPrintResult = true; //是否开启结果打印
 
 

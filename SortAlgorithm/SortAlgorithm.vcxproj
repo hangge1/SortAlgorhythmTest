@@ -142,6 +142,7 @@
     <ClInclude Include="SortAlgo.h" />
     <ClInclude Include="SortAlgoCompareInstrument.h" />
     <ClInclude Include="StandardSort.h" />
+    <ClInclude Include="TimeStatistics.h" />
     <ClInclude Include="Tool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

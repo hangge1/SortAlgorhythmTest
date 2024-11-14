@@ -31,6 +31,16 @@ public:
         return (rand() % (MaxNum - MinNum + 1)) + MinNum;
     }
 
+    std::vector<int> GenerateTestData(int NumberOfRandomData, int MinNum = 0, int MaxNum = 99) const
+    {
+        std::vector<int> result;
+        for (int i = 0; i < NumberOfRandomData; i++)
+        {
+            result.emplace_back(Tool::Get().GetRandom(MinNum, MaxNum));
+        }
+        return result;
+    }
+
     void Print(const std::vector<int>& InputDatas) const
     {
         for (int num : InputDatas)
@@ -59,6 +69,7 @@ public:
         }
         std::cout << postWords;
     }
+
 private:
     Tool()
     {
