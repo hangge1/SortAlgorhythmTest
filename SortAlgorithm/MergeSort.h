@@ -34,7 +34,7 @@ public:
         SortResults = InputDatas;
         if(SortResults.empty())return;
 
-        MergeSortMain(SortResults, 0, SortResults.size() - 1);
+        MergeSortMain(SortResults, 0, (int)SortResults.size() - 1);
     }
 
     //[left, right]
@@ -105,7 +105,7 @@ public:
         // 带合并序列长度，1表示两个长度为1的序列需要合并！后面依次范围2、4、8...
         int WillMergeArrayLength = 1;
 
-        int DataLength = SortResults.size();
+        int DataLength = (int)SortResults.size();
         for (int i = WillMergeArrayLength; i < DataLength; i *= 2)
         {
             //第一个合并序列的区间，这里是闭区间【left,mid】和【mid+1，right】

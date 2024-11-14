@@ -61,7 +61,7 @@ public:
 
         //4 开辟结果数组，从后往前遍历原数据，根据累计数组值进行填写
         std::vector<int> tmp(SortResults.size());
-        for (int i = SortResults.size() - 1; i >= 0; i--)
+        for (int i = (int)SortResults.size() - 1; i >= 0; i--)
         {
            int v = SortResults[i];
            int pos = Counting[v - minNum] - 1;

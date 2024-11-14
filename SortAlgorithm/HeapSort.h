@@ -45,7 +45,7 @@ public:
         }     
         
         //2 交换根和尾节点，Heapify Root
-        int HeapSize = SortResults.size();
+        int HeapSize = (int)SortResults.size();
         while(HeapSize > 1)
         {
             std::swap(SortResults[0], SortResults[HeapSize - 1]);
@@ -144,7 +144,7 @@ public:
 
         //1 建堆【优化版本，此处从第一个非叶子节点开始从后往前，不断的Heapify】
         //第一个非叶子节点的下标是  len / 2 - 1
-        int size = SortResults.size();
+        int size = (int)SortResults.size();
         for (int i = size / 2 - 1; i >= 0; i--)
         {
             Heapify(SortResults, i, size);

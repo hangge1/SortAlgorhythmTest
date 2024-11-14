@@ -39,7 +39,7 @@ public:
         
         if(SortResults.empty())return;
 
-        SortMain(SortResults, 0, SortResults.size() - 1);
+        SortMain(SortResults, 0, (int)SortResults.size() - 1);
     }
 
     //排序数组的[startIndex, endIndex]闭区间的元素，默认升序
@@ -47,8 +47,6 @@ public:
     void SortMain(std::vector<int>& SortArray, int startIndex, int endIndex)
     {
         if(startIndex >= endIndex || startIndex < 0 || endIndex >= SortArray.size()) return;
-
-        //Print(SortArray, startIndex, endIndex);
 
         //选取一个pivot [最简单的选取，就选第一个]
         int pivot = SortArray[startIndex];
@@ -103,7 +101,7 @@ public:
         if(SortResults.empty())
             return;
 
-        SortMain(SortResults, 0, SortResults.size() - 1);
+        SortMain(SortResults, 0, (int)SortResults.size() - 1);
     }
 
     //排序数组的【startIndex, endIndex】闭区间的元素，默认升序
@@ -173,7 +171,7 @@ public:
         
         if(SortResults.empty())return;
 
-        SortMain(SortResults, 0, SortResults.size() - 1);
+        SortMain(SortResults, 0, (int)SortResults.size() - 1);
     }
 
     //排序数组的【startIndex, endIndex】闭区间的元素，默认升序
@@ -276,15 +274,13 @@ public:
         
         if(SortResults.empty())return;
 
-        SortMain(SortResults, 0, SortResults.size() - 1);
+        SortMain(SortResults, 0, (int)SortResults.size() - 1);
     }
 
     //排序数组的[startIndex, endIndex]闭区间的元素，默认升序
     //单边遍历的形式
     void SortMain(std::vector<int>& SortArray, int startIndex, int endIndex)
     {
-        //Print(SortArray, startIndex, endIndex);
-     
         std::stack<Range> RangeStack;
         RangeStack.emplace(startIndex, endIndex);
 

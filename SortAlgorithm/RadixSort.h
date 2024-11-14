@@ -41,7 +41,7 @@ public:
     //MaxBits表示数据的最大位数,比如10进制数据1000,最大位数就是4,千位,百位,十位,个位
     void RadixSortMain(std::vector<int>& SortDatas, int Base, int MaxBits)
     {
-        int size = SortDatas.size();
+        int size = (int)SortDatas.size();
         int Offset = 1;
 
         std::vector<int> bucksHelper(Base, 0); //辅助桶结构

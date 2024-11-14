@@ -1,41 +1,158 @@
 #pragma once
 
 #include <iostream>
-
 #include <chrono>
 
-#include "Tool.h"
 #include "SortAlgo.h"
 #include "StandardSort.h"
 
 
-struct SortAlgoCompareInstrumentConfig
+struct TestConfigParam
 {
+    //测试次数
     int TestTimes = 1;
+
+    //样本数据个数
     int Numbers = 10;
+
+    //数据最小值
     int MinNum = 1;
+
+    //数据最大值
     int MaxNum = 20;
+
+    //是否打印耗时
     bool IsPrintTime = true;
+
+    //是否打印中间过程
     bool IsPrintTemp = false;
+
+    //是否打印测试结果
     bool IsPrintResult = true;
+};
+
+struct OneTestResult
+{
+    bool IsPass = false;
+    float SpeedTime = 0.0f;
+};
+
+struct TestAllResults
+{
+    std::vector<OneTestResult> Results;
+    
+    float SumTime = 0.0f;
+    float AverageTime = 0.0f;
+public:
+    bool GetOneTestPass(int index)
+    {
+        if(index < 0 || index >= Results.size())
+        {
+            assert(false);
+        }
+
+        return Results[index].IsPass;
+    }
+
+    bool IsAllPass() const
+    {
+        bool IsAllPass = true;
+        for (int i = 0; i < Results.size(); i++)
+        {
+            if(!Results[i].IsPass)
+            {
+                IsAllPass = false;
+                break;
+            }
+        }
+        return IsAllPass;
+    }
+
+    void StatisticTime()
+    {
+        SumTime = GetSumTime();
+
+        if(Results.empty()) AverageTime = 0.0f;
+        else AverageTime = GetSumTime() / Results.size();
+    }
+
+    float GetAverageTime() const
+    {
+        if(Results.empty()) return 0.0f;
+
+        return GetSumTime() / Results.size();
+    }
+
+    float GetSumTime() const
+    {
+        float sumTime = 0.0f;
+        for (const OneTestResult& res : Results)
+        {
+            sumTime += res.SpeedTime;
+        }
+        return sumTime;
+    }
+};
+
+//时间统计用的类
+class TimeStatistics
+{
+public:
+    TimeStatistics()
+    {
+        SetStartPoint();
+    }
+
+    ~TimeStatistics()
+    {
+        Stop();
+    }
+
+    float GetTime_s() const
+    {
+        return GetTime_us() / 1000000.f;
+    }
+
+    float GetTime_ms() const
+    {
+        return GetTime_us() / 1000.f;
+    }
+
+    //如果已经停止，就返回停止时的统计时间，否则返回实时时间!
+    float GetTime_us() const
+    {
+        if(HasStop) return Duration;
+        
+        return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
+    }
+
+    void Stop()
+    {
+        if(!HasStop) HasStop = true;
+        Duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
+    }
+
+    void Restart()
+    {
+        SetStartPoint();
+        HasStop = false;
+    }
+private:
+    void SetStartPoint()
+    {
+        start = std::chrono::high_resolution_clock::now();
+    }
+
+    std::chrono::high_resolution_clock::time_point start;
+    long long Duration = 0;
+    bool HasStop = false;
 };
 
 class SortAlgoCompareInstrument
 {
 public:
-    
-    //待排序数组的数字个数
-    inline static int Default_Test_Number_Count = 10;
-    inline static int Default_Test_MinNumber = 1;
-    inline static int Default_Test_MaxNumber = 20;
-
-    long long LastLoopSpeedTime = 0;
-    double AverageTime = 0.0;
-    double SumTime = 0.0;
-
-    bool IsPrintTemp = false;
-    bool IsPrintTime = true;
-    bool IsPrintResult = true;
+    //默认测试配置参数
+    constexpr static TestConfigParam DefaultTestConfig;
 
     static SortAlgoCompareInstrument& Get()
     {
@@ -43,96 +160,77 @@ public:
         return self;
     }
 
+    //不写参数，就是默认配置
     template<typename SortAlgoType>
-    void Execute_Test(const SortAlgoCompareInstrumentConfig& config)
+    void Execute_Test(const TestConfigParam& config = DefaultTestConfig)
     {
-        Execute_Test<SortAlgoType>(config.TestTimes, config.Numbers, config.MinNum, 
-            config.MaxNum, config.IsPrintTime, config.IsPrintResult,config.IsPrintTemp);
-    }
+        TestAllResults TestResults = SortAlgoCompareInstrument::Get().VerifyAlgo(SortAlgoType::Get(), config);
 
-    template<typename SortAlgoType>
-    void Execute_Test(int TestTimes, int Numbers, int MinNum, int MaxNum, bool InIsPrintTime = true,
-        bool InIsPrintResult = true, bool InIsPrintTemp = true)
-    {
-        IsPrintTemp = InIsPrintTemp;
-        IsPrintResult = InIsPrintResult;
-        IsPrintTime = InIsPrintTime;
-
-        SumTime = 0;
-        AverageTime = 0;
-        SortAlgoCompareInstrument::Default_Test_Number_Count = Numbers;
-        SortAlgoCompareInstrument::Default_Test_MinNumber = MinNum;
-        SortAlgoCompareInstrument::Default_Test_MaxNumber = MaxNum;
-        std::vector<bool> Results = SortAlgoCompareInstrument::Get().VerifyAlgo(SortAlgoType::Get(), TestTimes);
-
-        if(IsPrintTemp)
+        if(config.IsPrintTemp)
         {
-            for (int i = 0; i < Results.size(); i++)
+            for (int i = 0; i < TestResults.Results.size(); i++)
             {
-                std::cout << "第[" << i << "]测试结果 => " << (Results[i] ? "OK" : "Failed") << std::endl;
+                bool isPass = TestResults.GetOneTestPass(i);
+                std::cout << "第[" << i << "]测试结果 => " << (isPass ? "OK" : "Failed") << std::endl;
             }
         }
 
-        if(IsPrintResult)
+        if(config.IsPrintResult)
         {
-            bool HaveError = false;
-            for (int i = 0; i < Results.size(); i++)
-            {
-                if(!Results[i])
-                {
-                    HaveError = true;
-                    break;
-                }
-            }
-
-            std::cout << "测试结果： " << (HaveError ? "未通过": "全部通过") << std::endl;
+            std::cout << "[" << SortAlgoType::Get().Name() << "] 测试结果： " << "(共" << config.TestTimes << "轮)" 
+                << (TestResults.IsAllPass() ? "全部通过" : "未通过") << std::endl;
         }
 
-        if(IsPrintTime)
+        if(config.IsPrintTime)
         {
-            std::cout << "[" << SortAlgoType::Get().Name() << "]平均耗时: " << AverageTime / 1000.0 << " ms\n";
-            std::cout << "[" << SortAlgoType::Get().Name() << "]总耗时: " << SumTime / 1000.0 << " ms\n";
+            TestResults.StatisticTime();
+            std::cout << "[" << SortAlgoType::Get().Name() << "] 平均耗时: " << TestResults.AverageTime << " ms\n";
+            std::cout << "[" << SortAlgoType::Get().Name() << "] 总耗时: " << TestResults.SumTime << " ms\n";
         } 
         
         std::cout << std::endl;
     }
 
+
     //单次随机数测试
-    bool VerifyAlgoOneTime(SortAlgo& ToBeVerifiedSortAlgo)
-    {      
-        std::vector<int> BeSortDatas = GenerateTestData(Default_Test_Number_Count, Default_Test_MinNumber, Default_Test_MaxNumber);
-        if(IsPrintTemp) PrintData(BeSortDatas, "排序前: \n");
+    OneTestResult VerifyAlgoOneTime(SortAlgo& ToBeVerifiedSortAlgo, const TestConfigParam& configParam)
+    {
+        std::vector<int> BeSortDatas = GenerateTestData(configParam.Numbers, configParam.MinNum, configParam.MaxNum);
+        if(configParam.IsPrintTemp) Tool::Get().PrintData(BeSortDatas, "排序前: \n");
 
         std::vector<int> StandardSortResult;
         StandardSort::Get().Sort(BeSortDatas, StandardSortResult);
-        if(IsPrintTemp) PrintData(StandardSortResult, StandardSort::Get().Name() + "排序后: \n");
+        if(configParam.IsPrintTemp) Tool::Get().PrintData(StandardSortResult, StandardSort::Get().Name() + "排序后: \n");
 
         std::vector<int> ToBeVerifiedSortAlgoResult;
 
-        auto start = std::chrono::high_resolution_clock::now();
+        TimeStatistics timeStatic;
         ToBeVerifiedSortAlgo.Sort(BeSortDatas, ToBeVerifiedSortAlgoResult);
-        LastLoopSpeedTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
+        timeStatic.Stop();
 
-        if(IsPrintTemp) PrintData(ToBeVerifiedSortAlgoResult, ToBeVerifiedSortAlgo.Name() + "排序后: \n");
+        if(configParam.IsPrintTemp) Tool::Get().PrintData(ToBeVerifiedSortAlgoResult, ToBeVerifiedSortAlgo.Name() + "排序后: \n");
 
-        return StandardSortResult == ToBeVerifiedSortAlgoResult;
+        return { StandardSortResult == ToBeVerifiedSortAlgoResult, timeStatic.GetTime_ms() };
     }
 
     //多次随机数测试
-    std::vector<bool> VerifyAlgo(SortAlgo& ToBeVerifiedSortAlgo, int testTimes = 5)
+    TestAllResults VerifyAlgo(SortAlgo& ToBeVerifiedSortAlgo, const TestConfigParam& configParam)
     {
-        std::vector<bool> testResuls;
+        TestAllResults testResuls;
 
         int i = 0;
-        while(i < testTimes)
+        while(i < configParam.TestTimes)
         {
-            if(IsPrintTemp) std::cout << "===Test[" << i << "]===\n";
-            bool testFlag = VerifyAlgoOneTime(ToBeVerifiedSortAlgo);
-            AverageTime += LastLoopSpeedTime / (double)testTimes;
-            SumTime += LastLoopSpeedTime;
+            if(configParam.IsPrintTemp) std::cout << "===Test[" << i << "]===\n";
 
-            testResuls.emplace_back(testFlag);
-            if(IsPrintTemp) std::cout << "---------------------------------------------------------------\n";
+            OneTestResult oneResult = VerifyAlgoOneTime(ToBeVerifiedSortAlgo, configParam);
+            testResuls.Results.emplace_back(oneResult);
+
+            //AverageTime += testResult.UseTime / (float)configParam.TestTimes;
+            //SumTime += testResult.UseTime;
+            //testResuls.emplace_back(testResult.IsPass);
+
+            if(configParam.IsPrintTemp) std::cout << "---------------------------------------------------------------\n";
             i++;
         }
 
@@ -151,15 +249,7 @@ public:
         return result;
     }
 
-    void PrintData(const std::vector<int>& Data, std::string prefixWords = "", std::string postWords = "\n") const
-    {
-        std::cout << prefixWords;
-        for (int num : Data)
-        {
-            std::cout << num << " ";
-        }
-        std::cout << postWords;
-    }
+   
 
 private:
 

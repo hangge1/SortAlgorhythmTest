@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "SortAlgo.h"
@@ -39,7 +38,7 @@ public:
         SortResults = InputDatas;
 
         //每一轮冒泡的序列的结束下标
-        for (int i = SortResults.size() - 1; i >= 0; i--)
+        for(int i = (int)SortResults.size() - 1; i >= 0; i--)
         {
             //针对从[0, i]不断和下一个元素比较和交换
             for (int j = 0; j < i; j++)
@@ -74,7 +73,7 @@ public:
         SortResults = InputDatas;
 
         //每一轮冒泡的序列的结束下标
-        for (int i = SortResults.size() - 1; i >= 0; i--)
+        for (int i = (int)SortResults.size() - 1; i >= 0; i--)
         {
             bool HasSwap = false; 
             //针对从[0, i]不断和下一个元素比较和交换
@@ -114,7 +113,7 @@ public:
 
         //每一轮冒泡的序列的结束下标
         int HasSortedCount = 0;
-        for (int i = SortResults.size() - 1 - HasSortedCount; i >= 0; i--)
+        for (int i = (int)SortResults.size() - 1 - HasSortedCount; i >= 0; i--)
         {
             bool HasSwap = false; 
             //针对从[0, i]不断和下一个元素比较和交换

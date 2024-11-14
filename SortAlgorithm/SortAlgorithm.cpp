@@ -1,7 +1,7 @@
 
 
 #include <iostream>
-#include "SortAlgoCompareInstrument.h"
+
 #include "InsertionSort.h"
 #include "BubbleSort.h"
 #include "SelectionSort.h"
@@ -11,48 +11,43 @@
 #include "HeapSort.h"
 #include "RadixSort.h"
 
+#include "SortAlgoCompareInstrument.h"
+#include <thread>
 
 int main()
 {
-    //排序算法类
-    //测试次数
-    //数组的数字个数
-    //最小数字
-    //最大数字
-    //是否开启耗时打印
-    //是否开启中间过程打印
-
-    SortAlgoCompareInstrumentConfig TestConfigParams;
-    TestConfigParams.TestTimes = 10;
-    TestConfigParams.Numbers = 10000;
-    TestConfigParams.MinNum = 1;
-    TestConfigParams.MaxNum = 999;
-    TestConfigParams.IsPrintTime = true;
-    TestConfigParams.IsPrintTemp = false;
-    TestConfigParams.IsPrintResult = true;
+    //测试配置参数
+    TestConfigParam TestConfigParams;
+    TestConfigParams.TestTimes = 2; //测试次数
+    TestConfigParams.Numbers = 20; //样本数据个数
+    TestConfigParams.MinNum = 1; //最小数字
+    TestConfigParams.MaxNum = 999; //最大数字
+    TestConfigParams.IsPrintTime = true; //是否开启耗时打印
+    TestConfigParams.IsPrintTemp = false; //是否开启中间过程打印
+    TestConfigParams.IsPrintResult = true; //是否开启结果打印
 
 
-    //插入、冒泡、选择【单纯看速度，经测试，选择 快于 插入 快于 冒泡】
-    //SortAlgoCompareInstrument::Get().Execute_Test<InsertionSort>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Easy>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Flag_Opt>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_ForTime_Opt>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<SelectionSort>(TestConfigParams);
+    //插入、冒泡、选择
+    SortAlgoCompareInstrument::Get().Execute_Test<InsertionSort>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Easy>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_Flag_Opt>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<BubbleSort_ForTime_Opt>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<SelectionSort>(TestConfigParams);
     
-    //快排【4个版本，3个递归+1个迭代】、归并【2个版本，1个递归+1个迭代】
-    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_RandomPivot>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Medium3Pivot>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_UnRecursive>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<MergeSort>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<MergeSort_NoRecursion>(TestConfigParams);
+    //快排、归并
+    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Easy>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_RandomPivot>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_Medium3Pivot>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<QuickSort_UnRecursive>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<MergeSort>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<MergeSort_NoRecursion>(TestConfigParams);
 
-    // 堆排序【常规版本 和 优化版】
-    //SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Normal>(TestConfigParams);
-    //SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Opt_CreateHeap>(TestConfigParams);
+    // 堆排序
+    SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Normal>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Opt_CreateHeap>(TestConfigParams);
     
     // 计数排序
-    //SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
+    SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
     // 基数排序
     SortAlgoCompareInstrument::Get().Execute_Test<RadixSort>(TestConfigParams);
   
