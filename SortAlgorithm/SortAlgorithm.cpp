@@ -9,6 +9,7 @@
 #include "MergeSort.h"
 #include "CountingSort.h"
 #include "HeapSort.h"
+#include "RadixSort.h"
 
 
 int main()
@@ -22,10 +23,10 @@ int main()
     //是否开启中间过程打印
 
     SortAlgoCompareInstrumentConfig TestConfigParams;
-    TestConfigParams.TestTimes = 50;
+    TestConfigParams.TestTimes = 10;
     TestConfigParams.Numbers = 10000;
     TestConfigParams.MinNum = 1;
-    TestConfigParams.MaxNum = 20;
+    TestConfigParams.MaxNum = 999;
     TestConfigParams.IsPrintTime = true;
     TestConfigParams.IsPrintTemp = false;
     TestConfigParams.IsPrintResult = true;
@@ -46,16 +47,14 @@ int main()
     //SortAlgoCompareInstrument::Get().Execute_Test<MergeSort>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<MergeSort_NoRecursion>(TestConfigParams);
 
-    // 计数排序【稳定写法】
-    //SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
-
     // 堆排序【常规版本 和 优化版】
     //SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Normal>(TestConfigParams);
     //SortAlgoCompareInstrument::Get().Execute_Test<HeapSort_Opt_CreateHeap>(TestConfigParams);
     
-    // 基数排序 【RadixSort】
-  
-    // 桶排序【一般基数排序和计数排序，我们都作为桶排序的特殊情形，就不写其他案例了】
+    // 计数排序
+    //SortAlgoCompareInstrument::Get().Execute_Test<CountingSort>(TestConfigParams);
+    // 基数排序
+    //SortAlgoCompareInstrument::Get().Execute_Test<RadixSort>(TestConfigParams);
   
     // 希尔排序【用的很少】
     

@@ -137,6 +137,7 @@
     <ClInclude Include="InsertionSort.h" />
     <ClInclude Include="MergeSort.h" />
     <ClInclude Include="QuickSort.h" />
+    <ClInclude Include="RadixSort.h" />
     <ClInclude Include="SelectionSort.h" />
     <ClInclude Include="SortAlgo.h" />
     <ClInclude Include="SortAlgoCompareInstrument.h" />

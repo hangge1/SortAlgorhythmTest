@@ -53,5 +53,8 @@
     <ClInclude Include="HeapSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RadixSort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
