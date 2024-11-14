@@ -3,6 +3,20 @@
 
 #include "SortAlgo.h"
 
+/*
+    冒泡排序
+    1、稳定
+    2、时间复杂度 O(N^2)【特例，已有序下为O(N)】
+    3、空间复杂度 O(1)
+    4、这里给出三种写法
+    (1) 第一种是小白入门写法
+    (2) 第二种利用flag优化，已有序下中止循环
+    (3) 第三种考虑不断冒泡，所以外层循环的范围是不断缩小的
+
+    TODO: 鸡尾酒排序，更高级的优化【思路就是不仅从前往后冒泡，也从后往前冒泡】
+*/
+
+
 // the simplest way to write Bubble Sort 
 // It has not been optimized and theoretically is relatively slow
 class BubbleSort_Easy : public SortAlgo
