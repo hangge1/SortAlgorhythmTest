@@ -16,15 +16,9 @@
     （3）注意一点，咱们写法是支持负数的，也不限制数字一定要用0开始！   
 */
 
-class CountingSort : public SortAlgo
+class CountingSort : public SortAlgo<CountingSort>
 {
 public:
-    static CountingSort& Get()
-    {
-        static CountingSort sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "CountingSort";

@@ -18,15 +18,9 @@
       (2) heapify操作，不断往下看，如果是大根堆，比孩子节点小，就不断和孩子节点交换和递进
 */
 
-class HeapSort_Normal : public SortAlgo
+class HeapSort_Normal : public SortAlgo<HeapSort_Normal>
 {
 public:
-    static HeapSort_Normal& Get()
-    {
-        static HeapSort_Normal sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "HeapSort_Normal";
@@ -122,15 +116,9 @@ public:
     }
 };
 
-class HeapSort_Opt_CreateHeap : public SortAlgo
+class HeapSort_Opt_CreateHeap : public SortAlgo<HeapSort_Opt_CreateHeap>
 {
 public:
-    static HeapSort_Opt_CreateHeap& Get()
-    {
-        static HeapSort_Opt_CreateHeap sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "HeapSort_Opt_CreateHeap";

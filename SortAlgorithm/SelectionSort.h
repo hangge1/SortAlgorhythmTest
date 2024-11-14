@@ -12,15 +12,9 @@
      (1) 朴素算法每次找到最小值交换到头部； 可以考虑一次性遍历找到最大值和最小值，分别交换到头部和尾部！
 */
 
-class SelectionSort : public SortAlgo
+class SelectionSort : public SortAlgo<SelectionSort>
 {
 public:
-    static SelectionSort& Get()
-    {
-        static SelectionSort sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "SelectionSort";

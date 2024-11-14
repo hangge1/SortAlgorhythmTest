@@ -109,6 +109,28 @@ public:
         }
         return sumTime;
     }
+
+    //结果打印相关
+    void PrintEveryTestResult() const
+    {
+        for (int i = 0; i < Results.size(); i++)
+        {
+            printf("  第[%d]测试结果 => %s\n",i, Results[i].IsPass ? "Pass" : "Failed");
+        }
+    }
+
+    void PrintAllPassInfo(int TestTimes) const
+    {
+        printf("  共%d轮测试: %s\n\n", TestTimes, IsAllPass() ? "全部通过" : "未通过");
+        printf("  通过率: %.2f%%\n", GetPassRate());
+    }
+
+    void PrintSpeedTimeInfo() 
+    {
+        StatisticTime();
+        std::cout <<  "  平均耗时: " << AverageTime << " ms\n";
+        std::cout <<  "  总耗时: " << SumTime << " ms\n";
+    }
 };
 
 //排序算法比较机构
@@ -130,42 +152,32 @@ public:
     {
         printf("========================== Begin %s TEST ========================== \n\n",SortAlgoType::Get().Name().c_str());
 
-        TestAllResults TestResults = SortAlgoCompareInstrument::Get().VerifyAlgo(SortAlgoType::Get(), config);
+        TestAllResults TestResults = SortAlgoCompareInstrument::Get().VerifySortManyTime<SortAlgoType>(config);
 
         printf("[%s] 测试结果汇总: \n\n", SortAlgoType::Get().Name().c_str());
         if(config.IsPrintTemp)
         {
-            for (int i = 0; i < TestResults.Results.size(); i++)
-            {
-                bool isPass = TestResults.GetOneTestPass(i);
-                printf("  第[%d]测试结果 => %s\n",i, isPass ? "Pass" : "Failed");
-            }
+            TestResults.PrintEveryTestResult();
         }
 
         if(config.IsPrintResult)
         {
-            //std::cout << "[" << SortAlgoType::Get().Name() << "] 测试结果： " << "(共" << config.TestTimes << "轮)" 
-            //    << (TestResults.IsAllPass() ? "全部通过" : "未通过") << std::endl;
-
-            printf("  共%d轮测试: %s\n\n", config.TestTimes, (TestResults.IsAllPass() ? "全部通过" : "未通过"));
-            printf("  通过率: %.2f%%\n", TestResults.GetPassRate());
+            TestResults.PrintAllPassInfo(config.TestTimes);
         }
 
         if(config.IsPrintTime)
         {
-            TestResults.StatisticTime();
-            std::cout <<  "  平均耗时: " << TestResults.AverageTime << " ms\n";
-            std::cout <<  "  总耗时: " << TestResults.SumTime << " ms\n";
-        } 
+            TestResults.PrintSpeedTimeInfo();
+        }
         
-        printf("\n========================== End %s TEST ========================== \n",SortAlgoType::Get().Name().c_str());
-        std::cout << std::endl;
+        printf("\n========================== End %s TEST ========================== \n\n",SortAlgoType::Get().Name().c_str());
     }
 
 private:
 
-    //单次随机数测试
-    OneTestResult VerifyAlgoOneTime(SortAlgo& ToBeVerifiedSortAlgo, const TestConfigParam& configParam) const
+    //单次随机数排序算法验证
+    template<typename SortAlgoType>
+    OneTestResult VerifySortOneTime(const TestConfigParam& configParam) const
     {
         std::vector<int> BeSortDatas = Tool::Get().GenerateTestData(configParam.Numbers, configParam.MinNum, configParam.MaxNum);
         if(configParam.IsPrintTemp) Tool::Get().PrintData(BeSortDatas, "\n原始数据: \n");
@@ -177,16 +189,17 @@ private:
         std::vector<int> ToBeVerifiedSortAlgoResult;
 
         TimeStatistics timeStatic;
-        ToBeVerifiedSortAlgo.Sort(BeSortDatas, ToBeVerifiedSortAlgoResult);
+        SortAlgoType::Get().Sort(BeSortDatas, ToBeVerifiedSortAlgoResult);
         timeStatic.Stop();
 
-        if(configParam.IsPrintTemp) Tool::Get().PrintData(ToBeVerifiedSortAlgoResult,"\n" + ToBeVerifiedSortAlgo.Name() + "应用结果: \n");
+        if(configParam.IsPrintTemp) Tool::Get().PrintData(ToBeVerifiedSortAlgoResult,"\n" + SortAlgoType::Get().Name() + "应用结果: \n");
 
         return { StandardSortResult == ToBeVerifiedSortAlgoResult, timeStatic.GetTime_ms() };
     }
 
-    //多次随机数测试
-    TestAllResults VerifyAlgo(SortAlgo& ToBeVerifiedSortAlgo, const TestConfigParam& configParam) const
+    //多次随机数排序算法验证
+    template<typename SortAlgoType>
+    TestAllResults VerifySortManyTime(const TestConfigParam& configParam) const
     {
         TestAllResults testResuls;
 
@@ -195,12 +208,7 @@ private:
         {
             if(configParam.IsPrintTemp) std::cout << "------------------ Begin Test[" << i << "] ------------------ \n";
 
-            OneTestResult oneResult = VerifyAlgoOneTime(ToBeVerifiedSortAlgo, configParam);
-            testResuls.Results.emplace_back(oneResult);
-
-            //AverageTime += testResult.UseTime / (float)configParam.TestTimes;
-            //SumTime += testResult.UseTime;
-            //testResuls.emplace_back(testResult.IsPass);
+            testResuls.Results.emplace_back(VerifySortOneTime<SortAlgoType>(configParam));
 
             if(configParam.IsPrintTemp) std::cout << "------------------ End Test[" << i << "] ------------------\n\n";
             i++;

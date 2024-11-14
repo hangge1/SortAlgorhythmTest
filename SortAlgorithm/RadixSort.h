@@ -13,15 +13,9 @@
     5、简单介绍一下写法         
 */
 
-class RadixSort : public SortAlgo
+class RadixSort : public SortAlgo<RadixSort>
 {
 public:
-    static RadixSort& Get()
-    {
-        static RadixSort sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "RadixSort";

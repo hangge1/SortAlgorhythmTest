@@ -18,15 +18,9 @@
 */
 
 
-class QuickSort_Easy : public SortAlgo
+class QuickSort_Easy : public SortAlgo<QuickSort_Easy>
 {
 public:
-    static QuickSort_Easy& Get()
-    {
-        static QuickSort_Easy sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "QuickSort_Easy";
@@ -80,15 +74,9 @@ public:
 };
 
 // 优化Pivot的选取(随机选取)
-class QuickSort_RandomPivot : public SortAlgo
+class QuickSort_RandomPivot : public SortAlgo<QuickSort_RandomPivot>
 {
 public:
-    static QuickSort_RandomPivot& Get()
-    {
-        static QuickSort_RandomPivot sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "QuickSort_RandomPivot";
@@ -150,15 +138,9 @@ public:
 };
 
 // 优化Pivot的选取(Medium3)
-class QuickSort_Medium3Pivot : public SortAlgo
+class QuickSort_Medium3Pivot : public SortAlgo<QuickSort_Medium3Pivot>
 {
 public:
-    static QuickSort_Medium3Pivot& Get()
-    {
-        static QuickSort_Medium3Pivot sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "QuickSort_Medium3Pivot";
@@ -243,7 +225,7 @@ public:
 
 
 // 优化为非递归版本
-class QuickSort_UnRecursive : public SortAlgo
+class QuickSort_UnRecursive : public SortAlgo<QuickSort_UnRecursive>
 {
 public:
     struct Range
@@ -255,12 +237,6 @@ public:
             :start(s), end(e)
         {}
     };
-
-    static QuickSort_UnRecursive& Get()
-    {
-        static QuickSort_UnRecursive sort;
-        return sort;
-    }
 
     virtual std::string Name() const override
     {

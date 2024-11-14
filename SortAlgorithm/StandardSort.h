@@ -1,15 +1,10 @@
 #pragma once
 #include <algorithm>
 
-class StandardSort : public SortAlgo
+//std::sort 提供的排序算法！
+class StandardSort : public SortAlgo<StandardSort>
 {
 public:
-    static StandardSort& Get()
-    {
-        static StandardSort sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "StandardSort";

@@ -14,15 +14,9 @@
 */
 
 //µÝ¹é°æ±¾
-class MergeSort : public SortAlgo
+class MergeSort : public SortAlgo<MergeSort>
 {
 public:
-    static MergeSort& Get()
-    {
-        static MergeSort sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "MergeSort";
@@ -77,15 +71,9 @@ public:
 
 
 //·ÇµÝ¹é°æ±¾
-class MergeSort_NoRecursion : public SortAlgo
+class MergeSort_NoRecursion : public SortAlgo<MergeSort_NoRecursion>
 {
 public:
-    static MergeSort_NoRecursion& Get()
-    {
-        static MergeSort_NoRecursion sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "MergeSort_NoRecursion";

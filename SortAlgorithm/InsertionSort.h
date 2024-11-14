@@ -12,15 +12,9 @@
      (1) 朴素算法是在有序序列按顺序找到自己的位置插入； 这里可用二分法加快查找位置的过程！
 */
 
-class InsertionSort : public SortAlgo
+class InsertionSort : public SortAlgo<InsertionSort>
 {
 public:
-    static InsertionSort& Get()
-    {
-        static InsertionSort sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "InsertionSort";

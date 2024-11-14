@@ -18,15 +18,9 @@
 
 // the simplest way to write Bubble Sort 
 // It has not been optimized and theoretically is relatively slow
-class BubbleSort_Easy : public SortAlgo
+class BubbleSort_Easy : public SortAlgo<BubbleSort_Easy>
 {
 public:
-    static BubbleSort_Easy& Get()
-    {
-        static BubbleSort_Easy sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "BubbleSort_Easy";
@@ -53,15 +47,9 @@ public:
 };
 
 // use a flag to Optimize the situation where the sequence is basically ordered
-class BubbleSort_Flag_Opt : public SortAlgo
+class BubbleSort_Flag_Opt : public SortAlgo<BubbleSort_Flag_Opt>
 {
 public:
-    static BubbleSort_Flag_Opt& Get()
-    {
-        static BubbleSort_Flag_Opt sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "BubbleSort_Flag_Opt";
@@ -92,15 +80,9 @@ public:
 };
 
 // Optimize the number of iterations for each sequence
-class BubbleSort_ForTime_Opt : public SortAlgo
+class BubbleSort_ForTime_Opt : public SortAlgo<BubbleSort_ForTime_Opt>
 {
 public:
-    static BubbleSort_ForTime_Opt& Get()
-    {
-        static BubbleSort_ForTime_Opt sort;
-        return sort;
-    }
-
     virtual std::string Name() const override
     {
         return "BubbleSort_ForTime_Opt";
