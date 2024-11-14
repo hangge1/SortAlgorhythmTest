@@ -3,6 +3,21 @@
 #include "SortAlgo.h"
 #include <assert.h>
 
+/*
+    堆排序
+    1、不稳定
+    2、时间复杂度 O(N*LogN)
+    3、空间复杂度 O(1)
+    4、性能由于、空间占用O(1)、不考虑稳定性，首选堆排
+    5、这里给出两种写法，主要的差异在于建堆的过程
+     (1) 第一种HeapSort_Normal 是自顶向下，不断heapInsert ，时间复杂度O(NLogN)
+     (2) 第二种HeapSort_Opt_CreateHeap 是自底向上，不断heapify，时间复杂度O(N)
+    
+    注：堆的两个核心操作： heapInsert 和 heapify
+      (1) heapInsert操作，不断往上看，如果是大根堆，比父节点大，就不断和父节点交换和递进
+      (2) heapify操作，不断往下看，如果是大根堆，比孩子节点小，就不断和孩子节点交换和递进
+*/
+
 class HeapSort_Normal : public SortAlgo
 {
 public:
